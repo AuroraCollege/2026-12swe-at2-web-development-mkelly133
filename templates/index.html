@@ -1,18 +1,29 @@
-<head>
-    <title>{{ title }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+{% extends "base.html" %}
 
-<body>
-    <div class="App">
-        <header class="App-header">
-            <p>
-                GitHub Codespaces <span class="heart">♥️</span> Flask Template
-            </p>
-            <p class="small">
-                Edit <code>templates/index.html</code> and refresh to see your changes!
-            </p>
-        </header>
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-body p-4">
+                <h2 class="card-title">Welcome to the Quiz!</h2>
+                <p class="card-text">Answer all questions and see how well you score.</p>
+                <form method="POST" action="{{ url_for('start_quiz') }}">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="username" name="username" 
+                               placeholder="Enter your name (optional)" maxlength="50">
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg">Start Quiz</button>
+                    </div>
+                </form>
+                <div class="d-grid gap-2 mt-3">
+                    <a href="{{ url_for('leaderboard') }}" class="btn btn-secondary">View Leaderboard</a>
+                </div>
+            </div>
+        </div>
     </div>
-</body>
+</div>
+{% endblock %}
 
-</html>

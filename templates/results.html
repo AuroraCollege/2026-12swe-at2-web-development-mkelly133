@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Quiz Results{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-body p-4 text-center">
+                <h2 class="card-title">Quiz Complete!</h2>
+                
+                <div class="my-4">
+                    <div class="display-1 text-primary mb-3">{{ percentage }}%</div>
+                    <p class="lead">
+                        {% if username != 'Anonymous' %}
+                        <strong>{{ username }}</strong>, you scored 
+                        {% else %}
+                        You scored 
+                        {% endif %}
+                        <strong>{{ score }}</strong> out of <strong>{{ total }}</strong>
+                    </p>
+                </div>
+                
+                <div class="text-start">
+                    <h3 class="mb-3">Review Your Answers:</h3>
+                    {% for result in results %}
+                    <div class="alert {% if result.is_correct %}alert-success{% else %}alert-danger{% endif %} mb-2">
+                        <strong>Q{{ loop.index }}:</strong> {{ result.question }}<br>
+                        <span>Your answer: {{ result.your_answer }}</span>
+                        {% if not result.is_correct %}
+                        <br><span>Correct answer: {{ result.correct_answer }}</span>
+                        {% endif %}
+                        <span class="badge {% if result.is_correct %}bg-success{% else %}bg-danger{% endif %} float-end">
+                            {% if result.is_correct %}
+                            ✓ Correct
+                            {% else %}
+                            ✗ Incorrect
+                            {% endif %}
+                        </span>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="d-grid gap-2 mt-4">
+                    <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg">Take Quiz Again</a>
+                    <a href="{{ url_for('leaderboard') }}" class="btn btn-secondary">View Leaderboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Quiz - Question {{ current }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="progress mb-3" style="height: 25px;">
+            <div class="progress-bar bg-primary" role="progressbar" 
+                 style="width: {{ (current / total * 100) }}%" 
+                 aria-valuenow="{{ current }}" aria-valuemin="0" aria-valuemax="{{ total }}">
+                Question {{ current }} of {{ total }}
+            </div>
+        </div>
+        
+        <div class="card shadow">
+            <div class="card-body p-4">
+                <h2 class="card-title">{{ question.question_text }}</h2>
+                
+                <form method="POST" action="{{ url_for('answer') }}">
+                    <div class="list-group mb-3">
+                        {% for choice in question.choices %}
+                        <label class="list-group-item list-group-item-action">
+                            <input type="radio" class="form-check-input me-2" 
+                                   name="choice_id" 
+                                   id="choice-{{ choice.id }}" 
+                                   value="{{ choice.id }}"
+                                   required>
+                            {{ choice.text }}
+                        </label>
+                        {% endfor %}
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">Next Question</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
